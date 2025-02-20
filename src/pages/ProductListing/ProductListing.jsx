@@ -1,18 +1,27 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import "./ProductListing.css";
-import { Filter } from "./components/Filter/Filter";
-import { ProductListingSection } from "./components/ProductListingSection/ProductListingSection";
-import { useData } from "../../contexts/DataProvider.js";
+
+// import components with React.lazy
+const Filter = React.lazy(async () => ({
+  default: (await import("./components/Filter/Filter")).Filter
+}));
+const ProductListingSection = React.lazy(async () => ({
+  default: (await import("./components/ProductListingSection/ProductListingSection")).ProductListingSection
+}));
+
+const LoadingFallback = () => (
+  <div className="loading-spinner">Loading...</div>
+);
 
 export const ProductListing = () => {
-  const { loading } = useData();
   return (
-    !loading && (
-      <div className="page-container">
+    <div className="page-container">
+      <Suspense fallback={<LoadingFallback />}>
         <Filter className="filters" />
         <ProductListingSection className="products-container" />
-      </div>
-    )
+      </Suspense>
+    </div>
   );
 };
+

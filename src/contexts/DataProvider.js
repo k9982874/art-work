@@ -16,14 +16,22 @@ export function DataProvider({ children }) {
   const [state, dispatch] = useReducer(dataReducer, initialState);
   const [loading, setLoading] = useState(false);
   const [, setError] = useState(false);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    hasNextPage: true,
+  });
 
-  const getAllSneakers = async () => {
+  const getAllSneakers = async (page = 1, limit = 10) => {
     try {
       setError(false);
       setLoading(true);
-      const response = await getAllProducts();
+      const response = await getAllProducts(page, limit);
       if (response.request.status === 200) {
         setLoading(false);
+        setPagination({
+          currentPage: page,
+          hasNextPage: response.data.products.length > 0,
+        });
         dispatch({
           type: "GET_ALL_PRODUCTS_FROM_API",
           payload: [
@@ -62,7 +70,7 @@ export function DataProvider({ children }) {
   }, []);
 
   return (
-    <DataContext.Provider value={{ state, dispatch, loading }}>
+    <DataContext.Provider value={{ state, dispatch, loading, pagination, getAllSneakers }}>
       {children}
     </DataContext.Provider>
   );

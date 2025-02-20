@@ -13,7 +13,10 @@ export const initialState = {
 export const dataReducer = (state, action) => {
   switch (action.type) {
     case "GET_ALL_PRODUCTS_FROM_API":
-      return { ...state, allProductsFromApi: action.payload };
+      return { ...state, allProductsFromApi: [
+        ...state.allProductsFromApi,
+        ...action.payload,
+      ]};
 
     case "GET_ALL_CATEGORIES":
       return { ...state, allCategories: action.payload };

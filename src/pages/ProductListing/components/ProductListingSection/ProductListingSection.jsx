@@ -2,6 +2,8 @@ import "./ProductListingSection.css";
 import Tilt from "react-parallax-tilt";
 import React from "react";
 
+import useInfiniteScroll from 'react-infinite-scroll-hook';
+
 import { useData } from "../../../../contexts/DataProvider.js";
 import { Link } from "react-router-dom";
 import { getCategoryWiseProducts } from "../../../../helpers/filter-functions/category";
@@ -16,7 +18,7 @@ import { useUserData } from "../../../../contexts/UserDataProvider.js";
 import { BsFillStarFill } from "react-icons/bs";
 
 export const ProductListingSection = () => {
-  const { state } = useData();
+  const { state, loading, pagination, getAllSneakers } = useData();
   const {
     isProductInCart,
     isProductInWishlist,
@@ -40,6 +42,21 @@ export const ProductListingSection = () => {
   const pricedProducts = getPricedProducts(categoryProducts, price);
 
   const sortedProducts = getSortedProducts(pricedProducts, sort);
+
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage: pagination.hasNextPage,
+    onLoadMore: () => {
+      getAllSneakers(pagination.currentPage + 1);
+    },
+    // When there is an error, we stop infinite loading.
+    // It can be reactivated by setting "error" state as undefined.
+    disabled: !pagination.hasNextPage,
+    // `rootMargin` is passed to `IntersectionObserver`.
+    // We can use it to trigger 'onLoadMore' when the sentry comes near to become
+    // visible, instead of becoming fully visible on the screen.
+    rootMargin: '0px 0px 400px 0px',
+  });
 
   return (
     <div className="product-card-container">
@@ -131,6 +148,11 @@ export const ProductListingSection = () => {
             </Tilt>
           );
         })
+      )}
+      {(loading || pagination.hasNextPage) && (
+        <div ref={sentryRef}>
+          <div>Loading...</div>
+        </div>
       )}
     </div>
   );
