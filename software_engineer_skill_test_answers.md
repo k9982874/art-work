@@ -1,4 +1,4 @@
-## Skill Test Answers
+## Software Engineer Skill Test Answers
 
 ### Q1: Optimize the product listing page to reduce loading time
 #### Use lazy loading for product list page
@@ -21,7 +21,7 @@ First loading time without cache
 | 1        | 3.27s    | 2.71s   |
 | 2        | 3.12s    | 2.87s   |
 | 3        | 3.32s    | 2.75s   |
-The average loading time before optimization was 3.24 seconds, and the average loading time after optimization was 2.76 seconds.
+| Average  | 3.24s    | 2.76s   |
 
 #### Conclusion
 Because the product list page uses a paginated loading strategy, the optimized average initial load time has been reduced by half a second.
@@ -32,11 +32,12 @@ I restructured the project into three sub-modules.
 1. api: the location of backend source code
 2. web: the location of frontend source code
 3. shared: the common library sharing between projects.
-Under the project structure, programmers can collaborate without being affected and share the work results.
+
+Under the project structure, developers can collaborate without being affected and share the work results.
 Depending on the project size and the number of members, the project can also be designed in monorepo or microservices pattern.
 
 ### Q3: Write automated tests to cover key functionalities.
-I created unit tests for the controllers, here is the report.
+I created unit tests for the controllers, here is the report. Please check test files in the folder *api/tests*.
 ```bash
 $ npm run test:coverage
 
