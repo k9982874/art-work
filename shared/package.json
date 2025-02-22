@@ -1,0 +1,27 @@
+{
+  "name": "@sneakers/shared",
+  "version": "0.1.3",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./helpers/filter-functions": "./helpers/filter-functions/index.js",
+    "./helpers/searchedProducts": "./helpers/searchedProducts.js",
+    "./mock": "./mock/index.js",
+    "./reducer": "./reducer/index.js",
+    "./services": "./services/index.js",
+    "./services/address-services": "./services/address-services/index.js",
+    "./services/auth-services": "./services/auth-services/index.js",
+    "./services/cart-services": "./services/cart-services/index.js",
+    "./services/order-services": "./services/order-services/index.js",
+    "./services/wishlist-services": "./services/wishlist-services/index.js"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.7",
+    "jwt-decode": "^3.1.2",
+    "miragejs": "^0.1.47",
+    "uuid": "^8.3.2"
+  }
+}
